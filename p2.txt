@@ -1,0 +1,165 @@
+1. Perfect Number program
+func main() {
+var num int
+fmt.Println("Enter the number : ")
+fmt.Scanf("%d", &num)
+sum := 0
+for i := 1; i < num; i++ {
+if num%i == 0 {
+sum = sum + i
+}
+}
+if sum == num {
+fmt.Printf("%d is a perfect number.", num)
+} else {
+fmt.Printf("%d is not a perfect number.", num)
+}
+}
+2. Fibonacci Series
+func main() {
+var n int
+t1 := 0
+t2 := 1
+nextTerm := t1 + t2
+fmt.Printf("Enter the nth term : ")
+fmt.Scanf("%d", &n)
+if n == 0 {
+fmt.Printf("%d", t1)
+} else if n == 1 {
+fmt.Printf("%d %d", t1, t2)
+} else {
+fmt.Printf("%d %d ", t1, t2)
+for i := 3; i <= n; i++ {
+fmt.Printf(" %d ", nextTerm)
+t1 = t2
+t2 = nextTerm
+nextTerm = t1 + t2
+}
+}}
+3. Factorial Recursion
+func main() {
+var num int
+fmt.Printf("Enter the number : ")
+fmt.Scanf("%d", &num)
+fmt.Printf("Factorial of %d is %d", num, fact(num))
+}
+func fact(n int) int {
+if n == 1 {
+return 1
+}
+return n * fact(n-1)
+}
+4. Palindrome
+func checkPalindrome(num int) int {
+var reversed, remainder, original int
+reversed = 0
+original = num
+for num != 0 {
+remainder = num % 10
+reversed = reversed*10 + remainder
+num /= 10
+}
+if original == reversed {
+return 1
+} else {
+return 0
+}
+}
+func main() {
+var number, result int
+fmt.Println("Enter the number : ")
+fmt.Scanf("%d", &number)
+result = checkPalindrome(number)
+if result == 1 {
+fmt.Printf("%d is a palindrome number", number)
+} else {
+fmt.Printf("%d is not a palindrome number", number)
+}
+}
+5. Perfect Number
+func main() {
+var i, num, rem int
+sum := 0
+fmt.Println("Enter the number : ")
+fmt.Scanf("%d", &num)
+for i = 1; i < num; i++ {
+rem = num % i
+if rem == 0 {
+sum += i
+}
+}
+if sum == num {
+fmt.Printf("%d is a perfect number.", num)
+} else {
+fmt.Printf("%d is not a perfect number.", num)
+}
+//6 , 28
+}
+6. Armstrong Number Program
+func main() {
+var number,tempNumber,remainder int
+var result int =0
+fmt.Print("Enter any three digit number : ")
+fmt.Scan(&number)
+tempNumber = number
+/* A positive integer is called an Armstrong number of order n if
+ the sum of cubes of each digits is equal to the number itself.
+ 153 = 1*1*1 + 5*5*5 + 3*3*3 // 153 is an Armstrong number.
+*/
+// Use of For Loop as While Loop
+for {
+remainder = tempNumber%10
+result += remainder*remainder*remainder
+tempNumber /=10
+if(tempNumber==0){
+break // Break Statement used to stop the loop
+}
+}
+if(result==number){
+fmt.Printf("%d is an Armstrong number.",number)
+}else{
+fmt.Printf("%d is not an Armstrong number.",number)
+}
+}
+7. Prime Number
+func main() {
+var num int
+count := 0
+fmt.Printf("Enter the number : ")
+fmt.Scanf("%d", &num)
+for i := 1; i <= num; i++ {
+if num%i == 0 {
+count++
+}
+}
+if count == 2 {
+fmt.Printf("%d is a prime number.", num)
+} else {
+fmt.Printf("%d is not a prime number.", num)
+}
+}
+8. Sum Of Numbers
+func main() {
+var num int
+fmt.Println("Enter the number : ")
+fmt.Scanf("%d", &num)
+fmt.Printf("Additon is : %d ", addNumbers(num))
+}
+func addNumbers(num int) int {
+if num != 0 {
+return num + addNumbers(num-1)
+} else {
+return num
+}
+}
+// Second Method
+func main() {
+ var digiNum, digiSum, digiReminder int
+ fmt.Print("Enter the Number to find the Sum of Digits = ")
+ fmt.Scanln(&digiNum)
+ for digiSum = 0; digiNum > 0; digiNum = digiNum / 10 {
+ digiReminder = digiNum % 10
+ digiSum = digiSum + digiReminder
+ }
+ fmt.Println("The Sum of Digits in this Number = ", digiSum)
+}

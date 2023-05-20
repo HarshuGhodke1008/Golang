@@ -1,0 +1,586 @@
+1
+Go Practical Exam Questions 
+Note:- A single sheet of paper can’t decide my future.
+1. Write a program in go language to print PASCALS triangle
+package main
+import "fmt"
+func main() {
+ rows := 7 // number of rows to print
+ var coef int
+ for i := 0; i < rows; i++ {
+ coef = 1
+ for j := 0; j < rows-i; j++ {
+ fmt.Print(" ") // print space to align numbers
+ }
+ for j := 0; j <= i; j++ {
+ fmt.Printf("%4d", coef)
+ coef = coef * (i - j) / (j + 1)
+ }
+ fmt.Println()
+ }
+}
+2. Write a program in go language to accept user choice and print answer of using 
+arithmetical operators
+package main
+import "fmt"
+func main() {
+var num1, num2, result int
+var operator string
+fmt.Println("Enter two numbers:")
+fmt.Scanln(&num1, &num2)
+fmt.Println("Enter an operator (+, -, *, /):")
+fmt.Scanln(&operator)
+2
+switch operator {
+case "+":
+result = num1 + num2
+case "-":
+result = num1 - num2
+case "*":
+result = num1 * num2
+case "/":
+result = num1 / num2
+default:
+fmt.Println("Invalid operator")
+return
+}
+fmt.Printf("%d %s %d = %d", num1, operator, num2, result)
+}
+3. Write a program in go language to print recursive sum of digits of given number.
+package main
+import "fmt"
+func sumOfDigits(num int) int {
+ if num == 0 {
+ return 0
+ } else {
+ return (num % 10) + sumOfDigits(num/10)
+ }
+}
+func main() {
+ var num int
+ fmt.Print("Enter a number: ")
+ fmt.Scanln(&num)
+ result := sumOfDigits(num)
+ fmt.Printf("The recursive sum of digits of %d is %d", num, result)
+}
+4. Write a program in go language using function to check whether accepts number is 
+palindrome or not.
+package main
+import "fmt"
+func isPalindrome(num int) bool {
+ originalNum := num
+3
+ reversedNum := 0
+ for num > 0 {
+ remainder := num % 10
+ reversedNum = reversedNum*10 + remainder
+ num /= 10
+ }
+ if originalNum == reversedNum {
+ return true
+ } else {
+ return false
+ }
+}
+func main() {
+ var num int
+ fmt.Print("Enter a number: ")
+ fmt.Scanln(&num)
+ if isPalindrome(num) {
+ fmt.Printf("%d is a palindrome number", num)
+ } else {
+ fmt.Printf("%d is not a palindrome number", num)
+ }
+}
+5. Write a program in go language to find the largest and smallest number in an 
+array. 
+package main
+import "fmt"
+func findMinMax(arr []int) (int, int) {
+ var min, max int
+ if len(arr) > 0 {
+ min = arr[0]
+4
+ max = arr[0]
+ }
+ for _, num := range arr {
+ if num < min {
+ min = num
+ }
+ if num > max {
+ max = num
+ }
+ }
+ return min, max
+}
+func main() {
+ arr := []int{10, 4, 23, 18, 7, 1, 30, 5}
+ min, max := findMinMax(arr)
+ fmt.Printf("The smallest number in the array is %d\n", min)
+ fmt.Printf("The largest number in the array is %d\n", max)
+}
+6. Write a program in go language to accept the book details such as BookID, Title, 
+Author, Price. Read and display the details of n number of books.
+package main
+import "fmt"
+type Book struct {
+ id int
+ title string
+ author string
+ price float64
+}
+5
+func main() {
+ var numBooks int
+ fmt.Print("Enter the number of books: ")
+ fmt.Scanln(&numBooks)
+ books := make([]Book, numBooks)
+ for i := 0; i < numBooks; i++ {
+ fmt.Printf("Enter the details for Book %d:\n", i+1)
+ fmt.Print("Enter Book ID: ")
+ fmt.Scanln(&books[i].id)
+ fmt.Print("Enter Book Title: ")
+ fmt.Scanln(&books[i].title)
+ fmt.Print("Enter Book Author: ")
+ fmt.Scanln(&books[i].author)
+ fmt.Print("Enter Book Price: ")
+ fmt.Scanln(&books[i].price)
+ }
+ fmt.Println("\nBook Details:")
+ for i := 0; i < numBooks; i++ {
+ fmt.Printf("Book %d:\n", i+1)
+ fmt.Printf("ID: %d\n", books[i].id)
+ fmt.Printf("Title: %s\n", books[i].title)
+6
+ fmt.Printf("Author: %s\n", books[i].author)
+ fmt.Printf("Price: %.2f\n", books[i].price)
+ fmt.Println()
+ }
+}
+7. Write a program in go language to sort array elements in ascending order.
+package main
+import "fmt"
+func bubbleSort(arr []int) {
+ n := len(arr)
+ for i := 0; i < n-1; i++ {
+ for j := 0; j < n-i-1; j++ {
+ if arr[j] > arr[j+1] {
+ arr[j], arr[j+1] = arr[j+1], arr[j]
+ }
+ }
+ }
+}
+func main() {
+ arr := []int{5, 3, 8, 4, 2}
+ fmt.Println("Before sorting:", arr)
+ bubbleSort(arr)
+ fmt.Println("After sorting:", arr)
+}
+8. Write a program in go language to accept n student details like roll_no, 
+stud_name, mark1,mark2, mark3. Calculate the total and average of marks using 
+structure.
+package main
+import "fmt"
+7
+type Student struct {
+ rollNo int
+ name string
+ marks [3]float64
+ total float64
+ average float64
+}
+func calculateTotalAndAverage(s *Student) {
+ for _, mark := range s.marks {
+ s.total += mark
+ }
+ s.average = s.total / 3
+}
+func main() {
+ var numStudents int
+ fmt.Print("Enter the number of students: ")
+ fmt.Scanln(&numStudents)
+ students := make([]Student, numStudents)
+ for i := 0; i < numStudents; i++ {
+ fmt.Printf("Enter the details for Student %d:\n", i+1)
+ fmt.Print("Enter Roll Number: ")
+ fmt.Scanln(&students[i].rollNo)
+ fmt.Print("Enter Student Name: ")
+ fmt.Scanln(&students[i].name)
+ fmt.Print("Enter Mark 1: ")
+ fmt.Scanln(&students[i].marks[0])
+ fmt.Print("Enter Mark 2: ")
+8
+ fmt.Scanln(&students[i].marks[1])
+ fmt.Print("Enter Mark 3: ")
+ fmt.Scanln(&students[i].marks[2])
+ calculateTotalAndAverage(&students[i])
+ }
+ fmt.Println("\nStudent Details:")
+ for i := 0; i < numStudents; i++ {
+ fmt.Printf("Student %d:\n", i+1)
+ fmt.Printf("Roll Number: %d\n", students[i].rollNo)
+ fmt.Printf("Name: %s\n", students[i].name)
+ fmt.Printf("Mark 1: %.2f\n", students[i].marks[0])
+ fmt.Printf("Mark 2: %.2f\n", students[i].marks[1])
+ fmt.Printf("Mark 3: %.2f\n", students[i].marks[2])
+ fmt.Printf("Total: %.2f\n", students[i].total)
+ fmt.Printf("Average: %.2f\n", students[i].average)
+ fmt.Println()
+ }
+}
+9. Write a program in go language to accept two matrices and display it's 
+multiplication.
+package main
+import "fmt"
+func main() {
+ var rows1, cols1, rows2, cols2 int
+ fmt.Print("Enter the number of rows and columns of Matrix 1: ")
+ fmt.Scanln(&rows1, &cols1)
+9
+ fmt.Print("Enter the number of rows and columns of Matrix 2: ")
+ fmt.Scanln(&rows2, &cols2)
+ if cols1 != rows2 {
+ fmt.Println("Matrices cannot be multiplied")
+ return
+ }
+ // create matrix 1
+ matrix1 := make([][]int, rows1)
+ for i := 0; i < rows1; i++ {
+ matrix1[i] = make([]int, cols1)
+ for j := 0; j < cols1; j++ {
+ fmt.Printf("Enter the element [%d][%d] of Matrix 1: ", i, j)
+ fmt.Scanln(&matrix1[i][j])
+ }
+ }
+ // create matrix 2
+ matrix2 := make([][]int, rows2)
+ for i := 0; i < rows2; i++ {
+ matrix2[i] = make([]int, cols2)
+ for j := 0; j < cols2; j++ {
+ fmt.Printf("Enter the element [%d][%d] of Matrix 2: ", i, j)
+ fmt.Scanln(&matrix2[i][j])
+ }
+ }
+ // perform matrix multiplication
+ result := make([][]int, rows1)
+ for i := 0; i < rows1; i++ {
+10
+ result[i] = make([]int, cols2)
+ for j := 0; j < cols2; j++ {
+ for k := 0; k < cols1; k++ {
+ result[i][j] += matrix1[i][k] * matrix2[k][j]
+ }
+ }
+ }
+ // display the result
+ fmt.Println("\nResultant Matrix after Multiplication:")
+ for i := 0; i < rows1; i++ {
+ for j := 0; j < cols2; j++ {
+ fmt.Printf("%d\t", result[i][j])
+ }
+ fmt.Println()
+ }
+}
+10. Write a program in go language to accept n records of employee information 
+(eno,ename,salary) and display record of employees having maximum salary.
+package main
+import (
+ "fmt"
+)
+type Employee struct {
+ eno int
+ ename string
+ salary float64
+}
+func main() {
+11
+ var n int
+ fmt.Print("Enter the number of employees: ")
+ fmt.Scan(&n)
+ employees := make([]Employee, n)
+ for i := 0; i < n; i++ {
+ fmt.Printf("\nEnter details for employee %d:\n", i+1)
+ fmt.Print("Enter eno: ")
+ fmt.Scan(&employees[i].eno)
+ fmt.Print("Enter ename: ")
+ fmt.Scan(&employees[i].ename)
+ fmt.Print("Enter salary: ")
+ fmt.Scan(&employees[i].salary)
+ }
+ maxSalary := employees[0].salary
+ maxSalaryIndex := 0
+ for i := 1; i < n; i++ {
+ if employees[i].salary > maxSalary {
+ maxSalary = employees[i].salary
+ maxSalaryIndex = i
+ }
+ }
+fmt.Printf("\nEmployee with maximum salary:\neno: %d, ename: %s, salary: %.2f", 
+employees[maxSalaryIndex].eno, employees[maxSalaryIndex].ename, 
+employees[maxSalaryIndex].salary)
+}
+11. Write a program in go language to create an interface shape that includes area and 
+perimeter. Implements these methods in circle and rectangle type.
+package main
+import (
+12
+ "fmt"
+ "math"
+)
+type Shape interface {
+ Area() float64
+ Perimeter() float64
+}
+type Circle struct {
+ radius float64
+}
+type Rectangle struct {
+ width float64
+ height float64
+}
+func (c Circle) Area() float64 {
+ return math.Pi * c.radius * c.radius
+}
+func (c Circle) Perimeter() float64 {
+ return 2 * math.Pi * c.radius
+}
+func (r Rectangle) Area() float64 {
+ return r.width * r.height
+}
+func (r Rectangle) Perimeter() float64 {
+ return 2 * (r.width + r.height)
+}
+13
+func main() {
+ c := Circle{radius: 5}
+ fmt.Printf("Circle with radius %v has area %v and perimeter %v\n", c.radius, c.Area(), 
+c.Perimeter())
+ r := Rectangle{width: 4, height: 3}
+ fmt.Printf("Rectangle with width %v and height %v has area %v and perimeter %v\n", 
+r.width, r.height, r.Area(), r.Perimeter())
+}
+12. Write a program in go language to create structure author. Write a method show() 
+whose receiver is struct author.
+package main
+import "fmt"
+type Author struct {
+ name string
+ country string
+}
+func (a Author) show() {
+ fmt.Printf("%s is an author from %s\n", a.name, a.country)
+}
+func main() {
+ author := Author{name: "J.K. Rowling", country: "United Kingdom"}
+ author.show()
+}
+13. Write a program in go language to create structure student. Write a method 
+show() whose receiver is a pointer of struct student.
+package main
+import "fmt"
+type Student struct {
+ name string
+14
+ id int
+ course string
+}
+func (s *Student) show() {
+ fmt.Printf("%d: %s is enrolled in %s\n", s.id, s.name, s.course)
+}
+func main() {
+ student := &Student{name: "John Doe", id: 12345, course: "Computer Science"}
+ student.show()
+}
+14. Write a go program using go routine and channel that will print the sum of the 
+squares and cubes of the individual digits of a number.
+package main
+import (
+"fmt"
+)
+func main() {
+// Input number
+num := 12345
+// Create channels to receive the squares and cubes of the digits
+squaresCh := make(chan int)
+cubesCh := make(chan int)
+// Launch goroutines to compute the squares and cubes of the digits
+go func() {
+sum := 0
+for num > 0 {
+digit := num % 10
+15
+sum += digit * digit
+num /= 10
+}
+squaresCh <- sum
+}()
+go func() {
+sum := 0
+for num > 0 {
+digit := num % 10
+sum += digit * digit * digit
+num /= 10
+}
+cubesCh <- sum
+}()
+// Wait for the goroutines to finish and print the results
+squaresSum, cubesSum := <-squaresCh, <-cubesCh
+fmt.Printf("The sum of the squares of the digits is: %d\n", squaresSum)
+fmt.Printf("The sum of the cubes of the digits is: %d\n", cubesSum)
+}
+15. Write a program in GO program that executes 5 go routines simultaneously which 
+generates numbers from 0 to 10, waiting between 0 and 250 ms after each go 
+routine.
+package main
+import (
+"fmt"
+"math/rand"
+"time"
+)
+16
+func main() {
+// Set the random seed
+rand.Seed(time.Now().UnixNano())
+// Launch 5 goroutines to generate numbers
+for i := 0; i < 5; i++ {
+go func() {
+for j := 0; j <= 10; j++ {
+fmt.Println(j)
+time.Sleep(time.Duration(rand.Intn(250)) * 
+time.Millisecond)
+}
+}()
+}
+// Wait for a key press to exit
+fmt.Scanln()
+}
+16. Write a program in go language that creates a slice of integers, checks numbers 
+from slice are even or odd and further sent to respective go routines through 
+channel and display values received by go routines.
+package main
+import (
+"fmt"
+)
+func main() {
+// Create a slice of integers
+nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+// Create channels for even and odd numbers
+evenCh := make(chan int)
+17
+oddCh := make(chan int)
+// Launch goroutines to send even and odd numbers to their respective channels
+go func() {
+for _, num := range nums {
+if num%2 == 0 {
+evenCh <- num
+} else {
+oddCh <- num
+}
+}
+}()
+// Launch goroutines to receive even and odd numbers from their respective 
+channels
+go func() {
+for even := range evenCh {
+fmt.Printf("%d is even\n", even)
+}
+}()
+go func() {
+for odd := range oddCh {
+fmt.Printf("%d is odd\n", odd)
+}
+}()
+// Wait for a key press to exit
+fmt.Scanln()
+}
+18
+17. Write a program in Go to create buffered channel, store few values in it and find 
+channel capacity and length. Read values from channel and find modified length of 
+a channel.
+package main
+import (
+"fmt"
+)
+func main() {
+// Create a buffered channel with capacity 5
+ch := make(chan int, 5)
+// Store some values in the channel
+ch <- 10
+ch <- 20
+ch <- 30
+// Find the channel capacity and length
+fmt.Printf("Channel capacity is %d\n", cap(ch))
+fmt.Printf("Channel length is %d\n", len(ch))
+// Read values from the channel
+val1 := <-ch
+val2 := <-ch
+val3 := <-ch
+// Find the modified channel length
+fmt.Printf("Modified channel length is %d\n", len(ch))
+// Print the values read from the channel
+fmt.Printf("Read value 1: %d\n", val1)
+fmt.Printf("Read value 2: %d\n", val2)
+19
+fmt.Printf("Read value 3: %d\n", val3)
+}
+18. Write a program in Go language to add two integers and write code for unit test to 
+test this code. 
+package main
+import "fmt"
+func Add(a, b int) int {
+return a + b
+}
+func main() {
+fmt.Println(Add(2, 3))
+}
+19. Write a program in Go language to subtract two integers and write code for table 
+test to test this code.
+package main
+import "fmt"
+func Sub(a, b int) int {
+return a - b
+}
+func main() {
+fmt.Println(Sub(5, 2))
+}
+func testSub(t *testing.T) {
+testCases := []struct {
+name string
+a, b int
+expected int
+}{
+20
+{name: "Positive numbers", a: 5, b: 2, expected: 3},
+{name: "Negative numbers", a: -5, b: -2, expected: -3},
+{name: "One zero", a: 0, b: 5, expected: -5},
+{name: "Two zeros", a: 0, b: 0, expected: 0},
+}
+for _, tc := range testCases {
+t.Run(tc.name, func(t *testing.T) {
+result := Sub(tc.a, tc.b)
+if result != tc.expected {
+t.Errorf("Sub(%d, %d) = %d; expected %d", tc.a, tc.b, result, 
+tc.expected)
+}
+})
+}}
+20. Write a function in Go language to find the square of a number and write a 
+benchmark for it.
+package main
+import (
+"fmt"
+"testing"
+)
+func Square(n int) int {
+return n * n
+}
+func BenchmarkSquare(b *testing.B) {
+for i := 0; i < b.N; i++ {
+Square(5)
+}}
+func main() {
+21
+fmt.Println(Square(5))
+}
+********************************* THE END ********************************
+KCUL FO TSEB
